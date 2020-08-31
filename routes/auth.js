@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { revalidarToken } = require('../controllers/auth');
+const { buscarProducto } = require('../controllers/productoController');
 const router = Router();
 
 /*router.get('/', (req, res) => {
@@ -8,6 +8,6 @@ const router = Router();
     })
 });*/
 
-router.get('/', revalidarToken );
+router.get('/', buscarProducto );
 
 module.exports = router;
