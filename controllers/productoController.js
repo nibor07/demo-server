@@ -1,4 +1,6 @@
+const Producto = require('../models/Producto');
 const { response } = require('express');
+
 const isPalindrome = require('../util/util');
 
 function filterInt(value) {
@@ -7,9 +9,9 @@ function filterInt(value) {
     } else {
       return NaN
     }
- };
+  }
 
- const dataFind = ( palabraBuscada ) =>{
+const dataFind = ( palabraBuscada ) =>{
 
     let busqueda = null;
 
@@ -37,16 +39,9 @@ function filterInt(value) {
     return busqueda;
 };
 
-const buscarProducto = async (req, res = response ) => {
-
-    //const { uid, name } = req;
-    console.log('req',req.query.search);
-    // Generar JWT
-    //const token = await generarJWT( uid, name );
-
-
+const buscarProducto = async (req, res = response) => {
     try{
-        let busqueda = dataFind(req.query.search);
+        let busqueda = dataFind(req.body.search);
         let respuesta = {
             codigo: "00",
             productos: null,
@@ -55,37 +50,29 @@ const buscarProducto = async (req, res = response ) => {
         if(busqueda){
             const busquedaNormalizada = JSON.stringify(busqueda);
 
-            let palabraSearchIsPalindromo = isPalindrome( req.query.search );            
+            let palabraSearchIsPalindromo = isPalindrome( req.body.search );            
 
-            //let productos = await Producto.find({ $or : JSON.parse(busquedaNormalizada) });
+            let productos = await Producto.find({ $or : JSON.parse(busquedaNormalizada) });
             
-            //respuesta.codigo = productos && productos.length > 0 ? "00":"02";
+            respuesta.codigo = productos && productos.length > 0 ? "00":"02";
 
             if ( palabraSearchIsPalindromo ){
                 respuesta.isPalindromo = palabraSearchIsPalindromo;
-                //productos.forEach(prod => prod.price = (prod.price / 2));
+                productos.forEach(prod => prod.price = (prod.price / 2));
             }
 
-            //respuesta.productos = productos;
+            respuesta.productos = productos;
             console.log('respuesta', respuesta);
             res.json(respuesta);
         }else{
             respuesta.codigo = "01";
             res.json(respuesta);
         }
-
-        /*res.json({
-            ok: true
-        })*/
-    
     }catch (error){
         console.error(error);
         res.status(400).json({ msg: 'Hubo un error en la busqueda del producto'});
-    }    
+    }
 }
-
-
-
 
 module.exports = {
     buscarProducto
