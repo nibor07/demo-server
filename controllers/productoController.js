@@ -41,7 +41,7 @@ const dataFind = ( palabraBuscada ) =>{
 
 const buscarProducto = async (req, res = response) => {
     try{
-        let busqueda = dataFind(req.body.search);
+        let busqueda = dataFind(req.query.search);
         let respuesta = {
             codigo: "00",
             productos: null,
@@ -50,7 +50,7 @@ const buscarProducto = async (req, res = response) => {
         if(busqueda){
             const busquedaNormalizada = JSON.stringify(busqueda);
 
-            let palabraSearchIsPalindromo = isPalindrome( req.body.search );            
+            let palabraSearchIsPalindromo = isPalindrome( req.query.search );            
 
             let productos = await Producto.find({ $or : JSON.parse(busquedaNormalizada) });
             
