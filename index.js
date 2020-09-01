@@ -10,7 +10,7 @@ const cors = require('cors');
 
 let app = express();
 
-app.use('/api/auth', require('./routes/auth') );
+app.use('/api/search', require('./routes/auth') );
 
 // CORS
 app.use(cors());
