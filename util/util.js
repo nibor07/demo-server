@@ -1,6 +1,7 @@
 const clean = (palabra) => palabra.toLowerCase().replace(/[\W_]/g, '');
 
 const isPalindrome = ( palabra ) =>{
+    console.log('palabra:', palabra);
     const cleanPalabra = clean(palabra);
     const charPalabra = cleanPalabra.split('');
 

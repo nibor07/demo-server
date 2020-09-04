@@ -12,7 +12,7 @@ function filterInt(value) {
   }
 
 const dataFind = ( palabraBuscada ) =>{
-
+    
     let busqueda = null;
 
     let idNumerico = filterInt(palabraBuscada);
@@ -62,7 +62,6 @@ const buscarProducto = async (req, res = response) => {
             }
 
             respuesta.productos = productos;
-            console.log('respuesta', respuesta);
             res.json(respuesta);
         }else{
             respuesta.codigo = "01";

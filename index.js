@@ -23,9 +23,11 @@ app.use( express.static('public'));
 app.use( express.json() );
 
 //Conectar a la base de datos
-conectarDB();
+conectarDB.connect();
 
 //escuchar
 app.listen( process.env.PORT, () => {
     console.log(`Servidor corriendo en puerto ${ process.env.PORT }`);
 });
+
+module.exports = app;
